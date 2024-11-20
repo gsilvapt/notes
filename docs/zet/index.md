@@ -1,3 +1,4 @@
+* 2024-11-20 10:20: [11](11/index.md) - `pyinstaller` lib issues
 * 2024-06-17 00:06: [10](10/index.md) - WordPress Reproducible Build
 * 2024-06-12 21:57: [9](9/index.md) - TIL: QuerySets Over Multiple Tables May Not Return Unique Values
 * 2024-06-06 20:08: [8](8/index.md) - Use bulks, please
