@@ -4,7 +4,7 @@ The sole purpose of this site is to share byte-sized knowledge with the world on
 
 ## Blog Posts vs This
 
-Blogs require a lot of effort to properly write, curaten and tell a story. Quick notes, on the other hand, are byte-sized information which I write when I encounter something new. This practice also helps me retaining knowledge. Often, you'll only see notes which I couldn't find in other places, or these are usually summaries of many sources I searched into and so on.
+Blogs require a lot of effort to properly write, curated and tell a story. Quick notes, on the other hand, are byte-sized information which I write when I encounter something new. This practice also helps me retaining knowledge. Often, you'll only see notes which I couldn't find in other places, or these are usually summaries of many sources I searched into and so on.
 
 
 ---
