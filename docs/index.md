@@ -1,18 +1,11 @@
-# Welcome to my public Zettelkasten
+# Welcome to my public notes
 
-The sole purpose of this site is to share byte-size knowledge with the world. I hope you find it useful.
+The sole purpose of this site is to share byte-sized knowledge with the world on various topics - from software engineering, to productivity, and all in between. It also provides a prettier UI and a decent search, as opposed to other alternatives. I hope you find it useful.
 
-## Blog Posts vs Zettelkasten
+## Blog Posts vs This
 
-Blogs require a lot of effort to properly write and maintain. Zettelkasten, on the other hand, is a collection of byte-sized information which I write when I encounter something know and it helps me retain knowledge on two fronts: I'm sharing it publicly, so I have to make sure it's correct, and I can refer back to it later.
+Blogs require a lot of effort to properly write, curated and tell a story. Quick notes, on the other hand, are byte-sized information which I write when I encounter something new. This practice also helps me retaining knowledge. Often, you'll only see notes which I couldn't find in other places, or these are usually summaries of many sources I searched into and so on.
 
-
-## How to Use the Site
-
-This site can be used in two ways:
-
-1. If you'd like to see what things I have been writing about, you can check the [Archive](./zet/) section freely.
-1. Search the website (press `s` on your keyboard) to find a given topic or keyword.
 
 ---
 
