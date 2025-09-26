@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="light">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <meta name="author" content="gsilvapt">
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>WordPress Reproducible Build - notes</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/fontawesome.min.css" rel="stylesheet">
+        <link href="../../css/brands.min.css" rel="stylesheet">
+        <link href="../../css/solid.min.css" rel="stylesheet">
+        <link href="../../css/v4-font-face.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link id="hljs-light" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" >
+        <link id="hljs-dark" rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github-dark.min.css" disabled>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">notes</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar-collapse" aria-controls="navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="nav-item">
+                                <a href="../.." class="nav-link">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="../" class="nav-link">Archive</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ms-md-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a href="https://github.com/gsilvapt/notes/edit/master/docs/notes/10/index.md" class="nav-link"><i class="fa-brands fa-github"></i> Edit on GitHub</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                              <button id="theme-menu" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme" class="nav-link dropdown-toggle">
+                                <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                <span class="d-lg-none ms-2">Toggle theme</span>
+                              </button>
+                              <ul class="dropdown-menu dropdown-menu-end">
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="light" aria-pressed="true">
+                                    <i class="fa-solid fa-sun fa-fw"></i>
+                                    <span class="ms-2">Light</span>
+                                    <i class="fa-solid fa-check ms-auto"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="dark" aria-pressed="false">
+                                    <i class="fa-solid fa-moon fa-fw"></i>
+                                    <span class="ms-2">Dark</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                                <li>
+                                  <button class="dropdown-item d-flex align-items-center" data-bs-theme-value="auto" aria-pressed="false">
+                                    <i class="fa-solid fa-circle-half-stroke fa-fw"></i>
+                                    <span class="ms-2">Auto</span>
+                                    <i class="fa-solid fa-check ms-auto d-none"></i>
+                                  </button>
+                                </li>
+                              </ul>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <script src="../../js/darkmode.js"></script>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-bs-toggle="collapse" data-bs-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-body-tertiary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-bs-level="1"><a href="#wordpress-reproducible-build" class="nav-link">WordPress Reproducible Build</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="wordpress-reproducible-build">WordPress Reproducible Build<a class="headerlink" href="#wordpress-reproducible-build" title="Permanent link">#</a></h1>
+<p>Had a task recently that essentially involved automating a Docker deployment of a WordPress blog. It was purely for testing purposes, so please note that most of its configuration is insecure as hell. Nonetheless, I spent 4 hours debugging an issue I thought was worth sharing and key to this task: I wanted the Docker containerization process to programmatically handle user creation and plugin installation.</p>
+<p>The idea is that we might need to frequently discard the blog, and we don't want to go through all the trouble of installing WordPress, installing specific versions of the plugins we want, and creating users with different privilege levels each time. Ultimately, we don't really care for most of that, so it's okay to use insecure defaults.</p>
+<p>So, we have a project tree that contains a folder <code>./plugins/vulnerable/</code> and some other dependency plugins that are required to use/activate in <code>./plugins/core</code>. I spent 3 hours debugging why <code>wp-cli</code> was not installing the plugins due to an unforeseen need to escape the <code>$</code> in the bash commands we were using just to get this going.</p>
+<p>PS: I am aware that using volumes to store the database and WordPress data would be better than bind mounts. For this case, this is sufficient really, and we don't want to over-engineer things<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. For a serious project, I'd recommend using volumes. The attached link explains this better than I can.</p>
+<pre><code>services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      ...
+    volumes:
+      - ./data/db:/var/lib/mysql
+
+  wordpress:
+    image: wordpress:6.5.2-php8.3-apache
+    depends_on:
+      - db
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - ./data/wordpress:/var/www/html
+      - ./plugins:/tmp/plugins
+
+  wp-cli:
+    env_file: .env
+    image: wordpress:cli-php8.3
+    user: &quot;33:33&quot;  # hack for https://stackoverflow.com/questions/57136171/execute-a-plugin-installed-wp-cli-command-with-docker-compose
+    depends_on:
+      - wordpress
+    volumes_from:
+      - wordpress:rw
+    command: &gt;
+      /bin/sh -c '
+      sleep 10;
+      wp core install --path=&quot;/var/www/html&quot; --url=&quot;http://localhost:8080&quot; --title=&quot;DVWPS&quot; --admin_user=admin --admin_password=secret --admin_email=x@x.com;
+      wp user create tester y@y.com --user_pass=megasecret --role=subscriber;
+      for plugin in /tmp/plugins/**/*.zip; do
+        wp plugin install $${plugin} --activate;
+      done;'
+</code></pre>
+<p>That <code>$${plugin}</code> is the difference between <code>wp-cli</code> being capable of installing the plugins or not. I couldn't see why the compose service was returning empty strings, even when I tried for plugin in <code>/tmp/plugins/**/*.zip; do echo $plugin; done;</code> and was too focused on directory permissions. In this case, it felt reasonable as the <code>wp-cli</code> needs to be capable of writing to directories that belong to another container in this setup. I tried a bunch of things until eventually, I tried installing one plugin I knew existed - it worked. "Damn, this has to be an issue with the bash commands then," and it was...</p>
+<p>As for the <code>user: "33:33"</code> directive, I kept encountering permission issues because WordPress <code>Dockerfile</code> sets most directories for user <code>www-data</code> and the <code>wp-cli</code> runs with a different user. Furthermore, this is a shared bind volume, and it seems <code>volumes_from</code> isn't sufficient. This appears to be a known problem already, highlighted in that StackOverflow question. This fakes the running user UID and GID as <code>www-data</code>.</p>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>https://docs.docker.com/storage/volumes/&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/bootstrap.bundle.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
