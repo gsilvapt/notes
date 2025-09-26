@@ -1,3 +1,4 @@
+* 2025-09-26 10:45: [13](13/index.md) - Lazygit and GPG
 * 2024-12-06 15:41: [12](12/index.md) - Mocking full classes in Python
 * 2024-11-20 10:20: [11](11/index.md) - `pyinstaller` lib issues
 * 2024-06-17 00:06: [10](10/index.md) - WordPress Reproducible Build
