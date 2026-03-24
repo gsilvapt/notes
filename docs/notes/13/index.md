@@ -8,7 +8,7 @@ Ever since I found out anyone can sign commits using anyone's email, I decided t
 
 Some open-source projects these days require it, and I want to believe some companies have started to enforce this on their employees, with all the supply chain attacks and forms of compromise.
 
-Thus, I have a whole section in my `gitconfig` file dedicated to GPG signing. And it let's me do cool things too.
+Thus, I have a whole section in my `gitconfig` file dedicated to GPG signing. And it lets me do cool things too.
 
 Usually, there's a global key assigned in my `$HOME/.gitconfig`:
 
@@ -25,7 +25,7 @@ In all `git` operations, this default configuration file is used. However, git a
 alias set_personal='git config --local user.signingkey PERSONALD34DB33F && git config --local user.email <another_email>'
 ```
 
-Of course, more parameters could be configured this way but that's enough for me. This get's stored in `<repo>/.git/config` file and overrides the configuration from `$HOME/.gitconfig`.
+Of course, more parameters could be configured this way but that's enough for me. This gets stored in `<repo>/.git/config` file and overrides the configuration from `$HOME/.gitconfig`.
 
 Pretty neat.
 

@@ -22,7 +22,7 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag)
 ```
 
-In a scenario you need to find all posts with tags created by user, you can do the following:
+In a scenario where you need to find all posts with tags created by user, you can do the following:
 
 ```Python
 post = Post.objects.filter(tags__author__name="author_name")

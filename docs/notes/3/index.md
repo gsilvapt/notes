@@ -4,7 +4,7 @@ date: 2024-05-03 22:49
 
 # Proper Python Logging
 
-After 3 months of working on a project from scratch, I finally understood how to setup a proper logging configuration in Python. Took me long enough but I'm glad I finally got it right. On the other hand, it's frustrating to see how little I was missing...
+After 3 months of working on a project from scratch, I finally understood how to set up a proper logging configuration in Python. Took me long enough but I'm glad I finally got it right. On the other hand, it's frustrating to see how little I was missing...
 
 So, here's what I had:
 
@@ -45,4 +45,4 @@ def main():
 
 Now all calls get printed.
 
-Frustrating to say the least, but often times we encounter these weird challenges where the solution is really that simple.
+Frustrating to say the least, but oftentimes we encounter these weird challenges where the solution is really that simple.

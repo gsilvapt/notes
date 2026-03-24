@@ -14,7 +14,7 @@ I personally advise everyone to know some things about programming. Sooner or la
 
 ## 2. Certifications Route
 
-There is a parallel industry for certifications in cyber security which might overwhelm those who are starting. If you wish to get started into pentesting, the [`eJPT` from eLearnSecurity](https://security.ine.com/certifications/ejpt-certification/) is a great, cheap starting point. Another flagship certification for getting you a job is [OSCP](https://www.offsec.com/courses/pen-200/) but despite being marketed as an entry-level certification, it might not be adequate for newcomers into IT for two reasons: pricing ]nd knowledge. Build your foundation, you can take on this exam later.
+There is a parallel industry for certifications in cyber security which might overwhelm those who are starting. If you wish to get started into pentesting, the [`eJPT` from eLearnSecurity](https://security.ine.com/certifications/ejpt-certification/) is a great, cheap starting point. Another flagship certification for getting you a job is [OSCP](https://www.offsec.com/courses/pen-200/) but despite being marketed as an entry-level certification, it might not be adequate for newcomers into IT for two reasons: pricing and knowledge. Build your foundation, you can take on this exam later.
 
 TCM Security has 2 certifications that can be a good deal for you: [PNPT](https://certifications.tcm-sec.com/pnpt/) and [PJPT](https://certifications.tcm-sec.com/pjpt/). The internet says knowledge-wise they are superior to eJPT and others, including the OSCP, but they aren't as established in the industry as they are newer. If you have the budget they might be an option for you.
 
