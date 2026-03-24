@@ -16,13 +16,13 @@ So I tried compiling the binary directly in the target machine - and it worked.
 
 The prevailing theory is `pyinstaller` bundles all the libraries that it will require to work based on what's available in the machine, which includes low-level libraries:
 
-> The one executable file contains an embedded archive of all the Python modules used by your script, as well as compressed copies of any non-Python support files (e.g. .so files). The bootloader uncompresses the support files and writes copies into the the temporary folder. This can take a little time. That is why a one-file app is a little slower to start than a one-folder app
+> The one executable file contains an embedded archive of all the Python modules used by your script, as well as compressed copies of any non-Python support files (e.g. .so files). The bootloader uncompresses the support files and writes copies into the temporary folder. This can take a little time. That is why a one-file app is a little slower to start than a one-folder app
 
 _From their docs: https://pyinstaller.org/en/stable/operating-mode.html#bundling-to-one-file_
 
 However, the commands my program invokes are OS-based, using Python's `subprocess.run`[^2]. So, it was not bundling `libk5crypto.so` correctly, meaning the bundled binary was expecting libs in different places from the ones in the target machine. 
 
-This BugZilla[^3] issue does resonated a bit, but didn't provide a solution to the problem.
+This BugZilla[^3] issue does resonate a bit, but didn't provide a solution to the problem.
 
 
 [^1]: https://gsilvapt.github.io/zet/4
